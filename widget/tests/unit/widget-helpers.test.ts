@@ -1,5 +1,5 @@
 /**
- * Unit tests for BasjooWidget helper functions.
+ * Unit tests for Custome_SupportWidget helper functions.
  *
  * Run with: vitest run tests/unit/widget-helpers.test.ts
  * or: jest tests/unit/widget-helpers.test.ts
@@ -176,32 +176,32 @@ describe('Widget API Base Detection (conceptual tests)', () => {
   it('uses configured apiBase when provided', () => {
     // This tests the URL construction logic
     const apiBase = 'https://api.example.com';
-    const url = new URL('/basjoo-logo.png', `${apiBase}/`);
-    expect(url.toString()).toBe('https://api.example.com/basjoo-logo.png');
+    const url = new URL('/Custome_Support-logo.png', `${apiBase}/`);
+    expect(url.toString()).toBe('https://api.example.com/Custome_Support-logo.png');
   });
 
   it('handles apiBase with trailing slash', () => {
     const apiBase = 'https://api.example.com/';
-    const url = new URL('/basjoo-logo.png', apiBase);
-    expect(url.toString()).toBe('https://api.example.com/basjoo-logo.png');
+    const url = new URL('/Custome_Support-logo.png', apiBase);
+    expect(url.toString()).toBe('https://api.example.com/Custome_Support-logo.png');
   });
 
   it('builds logo URL from relative path', () => {
     const apiBase = '';
     const origin = 'http://localhost';
-    const url = new URL('/basjoo-logo.png', origin);
-    expect(url.toString()).toContain('/basjoo-logo.png');
+    const url = new URL('/Custome_Support-logo.png', origin);
+    expect(url.toString()).toContain('/Custome_Support-logo.png');
   });
 });
 
 describe('Widget Storage Key Conventions', () => {
   it('generates session key per agent ID', () => {
     const agentId = 'agt_0123456789ab';
-    const storageKey = `basjoo_session_${agentId}`;
-    expect(storageKey).toBe('basjoo_session_agt_0123456789ab');
+    const storageKey = `Custome_Support_session_${agentId}`;
+    expect(storageKey).toBe('Custome_Support_session_agt_0123456789ab');
   });
 
   it('visitor ID uses global key', () => {
-    expect('basjoo_visitor_id').toBe('basjoo_visitor_id');
+    expect('Custome_Support_visitor_id').toBe('Custome_Support_visitor_id');
   });
 });

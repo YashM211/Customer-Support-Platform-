@@ -1101,7 +1101,7 @@ def _import_scrapling_module():
 
     # Use a unique module name to avoid conflicts
     module_name = f"scrapling_test_{id(_import_scrapling_module)}"
-    scrapling_path = "/Users/yi/Documents/Projects/basjoo/scrapling-service/main.py"
+    scrapling_path = "/Users/yi/Documents/Projects/Custome_Support/scrapling-service/main.py"
     spec = importlib.util.spec_from_file_location(module_name, scrapling_path)
     mod = importlib.util.module_from_spec(spec)
     sys.modules[module_name] = mod

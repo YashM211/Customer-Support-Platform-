@@ -1,23 +1,37 @@
 /**
- * Storage fallback tests for BasjooWidget
+ * Storage fallback tests for Custome_SupportWidget
  * Ensures widget renders even when localStorage access is denied (cross-origin, sandboxed, opaque-origin contexts)
  */
 
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 
 // Import the widget to register it on window
-import './BasjooWidget';
+import "./Custome_SupportWidget";
 
 // Helper to create a throwing localStorage mock
 function createThrowingMock(): Storage {
-  const error = new Error("Failed to read the 'localStorage' property from 'Window': Access is denied for this document.");
+  const error = new Error(
+    "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+  );
   return {
-    getItem: vi.fn(() => { throw error; }),
-    setItem: vi.fn(() => { throw error; }),
-    removeItem: vi.fn(() => { throw error; }),
-    clear: vi.fn(() => { throw error; }),
-    key: vi.fn(() => { throw error; }),
-    get length() { throw error; },
+    getItem: vi.fn(() => {
+      throw error;
+    }),
+    setItem: vi.fn(() => {
+      throw error;
+    }),
+    removeItem: vi.fn(() => {
+      throw error;
+    }),
+    clear: vi.fn(() => {
+      throw error;
+    }),
+    key: vi.fn(() => {
+      throw error;
+    }),
+    get length() {
+      throw error;
+    },
   } as unknown as Storage;
 }
 
@@ -27,22 +41,31 @@ function createWorkingMock(): { mock: Storage; store: Map<string, string> } {
   return {
     mock: {
       getItem: vi.fn((key: string) => store.get(key) ?? null),
-      setItem: vi.fn((key: string, value: string) => { store.set(key, value); }),
-      removeItem: vi.fn((key: string) => { store.delete(key); }),
-      clear: vi.fn(() => { store.clear(); }),
+      setItem: vi.fn((key: string, value: string) => {
+        store.set(key, value);
+      }),
+      removeItem: vi.fn((key: string) => {
+        store.delete(key);
+      }),
+      clear: vi.fn(() => {
+        store.clear();
+      }),
       key: vi.fn((index: number) => Array.from(store.keys())[index] ?? null),
-      get length() { return store.size; },
+      get length() {
+        return store.size;
+      },
     } as unknown as Storage,
     store,
   };
 }
 
-describe('BasjooWidget storage fallback', () => {
+describe("Custome_SupportWidget storage fallback", () => {
   let originalLocalStorage: Storage;
 
   beforeEach(() => {
     // Create minimal DOM structure
-    document.documentElement.innerHTML = '<html><head></head><body></body></html>';
+    document.documentElement.innerHTML =
+      "<html><head></head><body></body></html>";
 
     // Store original localStorage
     originalLocalStorage = window.localStorage;
@@ -50,106 +73,124 @@ describe('BasjooWidget storage fallback', () => {
 
   afterEach(() => {
     // Restore original localStorage
-    Object.defineProperty(window, 'localStorage', {
+    Object.defineProperty(window, "localStorage", {
       value: originalLocalStorage,
       writable: true,
       configurable: true,
     });
 
     // Clean up any widget containers
-    const containers = document.querySelectorAll('#basjoo-widget-container');
+    const containers = document.querySelectorAll(
+      "#Custome_Support-widget-container",
+    );
     containers.forEach((el) => el.remove());
-    const styles = document.querySelectorAll('#basjoo-widget-styles');
+    const styles = document.querySelectorAll("#Custome_Support-widget-styles");
     styles.forEach((el) => el.remove());
   });
 
-  it('does not throw during widget construction when localStorage.getItem throws', () => {
+  it("does not throw during widget construction when localStorage.getItem throws", () => {
     const throwingMock = createThrowingMock();
 
-    Object.defineProperty(window, 'localStorage', {
+    Object.defineProperty(window, "localStorage", {
       value: throwingMock,
       writable: true,
       configurable: true,
     });
 
-    const BasjooWidget = (window as any).BasjooWidget;
+    const Custome_SupportWidget = (window as any).Custome_SupportWidget;
 
     expect(() => {
-      new BasjooWidget({ agentId: 'test-agent' });
+      new Custome_SupportWidget({ agentId: "test-agent" });
     }).not.toThrow();
   });
 
-  it('creates container and button when storage access is denied', async () => {
+  it("creates container and button when storage access is denied", async () => {
     const throwingMock = createThrowingMock();
 
-    Object.defineProperty(window, 'localStorage', {
+    Object.defineProperty(window, "localStorage", {
       value: throwingMock,
       writable: true,
       configurable: true,
     });
 
-    const BasjooWidget = (window as any).BasjooWidget;
-    const widget = new BasjooWidget({ agentId: 'test-agent', apiBase: 'http://localhost:8000' });
+    const Custome_SupportWidget = (window as any).Custome_SupportWidget;
+    const widget = new Custome_SupportWidget({
+      agentId: "test-agent",
+      apiBase: "http://localhost:8000",
+    });
 
     await widget.init();
 
     // Verify widget container exists
-    const container = document.getElementById('basjoo-widget-container');
+    const container = document.getElementById(
+      "Custome_Support-widget-container",
+    );
     expect(container).toBeTruthy();
 
     // Verify widget button exists
-    const button = document.getElementById('basjoo-widget-button');
+    const button = document.getElementById("Custome_Support-widget-button");
     expect(button).toBeTruthy();
   });
 
-  it('falls back to memory storage and returns values during same page lifecycle', async () => {
+  it("falls back to memory storage and returns values during same page lifecycle", async () => {
     const { mock: workingMock, store } = createWorkingMock();
 
-    Object.defineProperty(window, 'localStorage', {
+    Object.defineProperty(window, "localStorage", {
       value: workingMock,
       writable: true,
       configurable: true,
     });
 
-    const BasjooWidget = (window as any).BasjooWidget;
-    const widget = new BasjooWidget({ agentId: 'test-agent', apiBase: 'http://localhost:8000' });
+    const Custome_SupportWidget = (window as any).Custome_SupportWidget;
+    const widget = new Custome_SupportWidget({
+      agentId: "test-agent",
+      apiBase: "http://localhost:8000",
+    });
 
     await widget.init();
 
     // Check that visitor_id was stored
-    expect(store.has('basjoo_visitor_id')).toBe(true);
-    const visitorId = store.get('basjoo_visitor_id');
+    expect(store.has("Custome_Support_visitor_id")).toBe(true);
+    const visitorId = store.get("Custome_Support_visitor_id");
     expect(visitorId).toBeTruthy();
-    expect(typeof visitorId).toBe('string');
-    expect(visitorId!.startsWith('visitor_')).toBe(true);
+    expect(typeof visitorId).toBe("string");
+    expect(visitorId!.startsWith("visitor_")).toBe(true);
 
     // Create another widget instance - should use same visitor_id
-    const widget2 = new BasjooWidget({ agentId: 'test-agent', apiBase: 'http://localhost:8000' });
+    const widget2 = new Custome_SupportWidget({
+      agentId: "test-agent",
+      apiBase: "http://localhost:8000",
+    });
     await widget2.init();
 
     // Both widgets should have the same visitor ID
-    const visitorId2 = store.get('basjoo_visitor_id');
+    const visitorId2 = store.get("Custome_Support_visitor_id");
     expect(visitorId2).toBe(visitorId);
   });
 
-  it('maintains session_id across widget operations when storage works', async () => {
+  it("maintains session_id across widget operations when storage works", async () => {
     const { mock: workingMock, store } = createWorkingMock();
 
-    Object.defineProperty(window, 'localStorage', {
+    Object.defineProperty(window, "localStorage", {
       value: workingMock,
       writable: true,
       configurable: true,
     });
 
-    const BasjooWidget = (window as any).BasjooWidget;
+    const Custome_SupportWidget = (window as any).Custome_SupportWidget;
 
     // Pre-set a session ID
-    store.set('basjoo_session_test-agent', 'session_12345');
+    store.set("Custome_Support_session_test-agent", "session_12345");
 
-    const widget = new BasjooWidget({ agentId: 'test-agent', apiBase: 'http://localhost:8000' });
+    const widget = new Custome_SupportWidget({
+      agentId: "test-agent",
+      apiBase: "http://localhost:8000",
+    });
     await widget.init();
 
     // Session should be loaded from storage
-    expect(store.get('basjoo_session_test-agent')).toBe('session_12345');
+    expect(store.get("Custome_Support_session_test-agent")).toBe(
+      "session_12345",
+    );
   });
 });

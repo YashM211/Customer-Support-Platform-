@@ -16,10 +16,10 @@ DEFAULT_REPLY = "抱歉，当前服务受限，请稍后再试。"
 
 def migrate():
     possible_paths = [
-        "/app/data/basjoo.db",
+        "/app/data/Custome_Support.db",
         "./test.db",
-        "./data/basjoo.db",
-        "../data/basjoo.db",
+        "./data/Custome_Support.db",
+        "../data/Custome_Support.db",
     ]
 
     db_path = None

@@ -8,10 +8,10 @@ import os
 
 def migrate():
     possible_paths = [
-        "/app/data/basjoo.db",  # Docker环境
+        "/app/data/Custome_Support.db",  # Docker环境
         "./test.db",             # 本地开发环境
-        "./data/basjoo.db",      # 本地开发环境
-        "../data/basjoo.db",     # 本地开发环境
+        "./data/Custome_Support.db",      # 本地开发环境
+        "../data/Custome_Support.db",     # 本地开发环境
     ]
 
     db_path = None

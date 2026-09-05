@@ -1,4 +1,4 @@
-# Basjoo 测试指南
+# Custome_Support 测试指南
 
 ## 快速开始
 
@@ -35,21 +35,21 @@ pytest -v -x --tb=short       # 组合使用
 
 ## 测试分层
 
-| 层级 | 位置 | 框架 | 运行命令 |
-|------|------|------|----------|
-| 后端单元测试 | `backend/tests/unit/` | pytest | `cd backend && pytest tests/unit/` |
-| 后端契约测试 | `backend/tests/contracts/` | pytest | `cd backend && pytest tests/contracts/` |
-| 后端集成测试 | `backend/tests/integration/` | pytest | `cd backend && pytest tests/integration/` |
-| 后端安全/压力/健壮性 | `backend/tests/` 根目录 | pytest | `cd backend && pytest tests/test_*.py` |
-| 前端类型检查 + 测试 | `frontend-nextjs/` | tsc + vitest | `npm run typecheck && npm run test` |
-| Widget 类型检查 + 测试 | `widget/` | tsc + vitest | `npm run typecheck && npm run test` |
-| E2E 测试（根目录） | `tests/e2e/` | Playwright | `npm run test:e2e` |
+| 层级                   | 位置                         | 框架         | 运行命令                                  |
+| ---------------------- | ---------------------------- | ------------ | ----------------------------------------- |
+| 后端单元测试           | `backend/tests/unit/`        | pytest       | `cd backend && pytest tests/unit/`        |
+| 后端契约测试           | `backend/tests/contracts/`   | pytest       | `cd backend && pytest tests/contracts/`   |
+| 后端集成测试           | `backend/tests/integration/` | pytest       | `cd backend && pytest tests/integration/` |
+| 后端安全/压力/健壮性   | `backend/tests/` 根目录      | pytest       | `cd backend && pytest tests/test_*.py`    |
+| 前端类型检查 + 测试    | `frontend-nextjs/`           | tsc + vitest | `npm run typecheck && npm run test`       |
+| Widget 类型检查 + 测试 | `widget/`                    | tsc + vitest | `npm run typecheck && npm run test`       |
+| E2E 测试（根目录）     | `tests/e2e/`                 | Playwright   | `npm run test:e2e`                        |
 
 ## 后端测试特点
 
 后端测试配置（`backend/pytest.ini` + `backend/tests/conftest.py`）：
 
-- 自动设置 `BASJOO_TEST_MODE=1`
+- 自动设置 `Custome_Support_TEST_MODE=1`
 - 每次测试使用隔离的 SQLite 数据库（`backend/.pytest_dbs/`）
 - 对 Qdrant/Jina/LLM 集成进行 monkeypatch，大多数 API 测试无需外部服务
 - Redis/Qdrant 主机名在 Docker 容器名与 localhost 之间自动回退
@@ -59,10 +59,10 @@ pytest -v -x --tb=short       # 组合使用
 
 E2E 测试提供两种运行模式：
 
-| 模式 | 目标环境 | 入口地址 | 用途 |
-|------|----------|----------|------|
-| **smoke（默认）** | Docker dev 栈 | `http://localhost:3000` | 快速功能验证 |
-| **prod-like** | Docker 生产栈 | `http://localhost:80` (nginx) | 生产环境近似测试 |
+| 模式              | 目标环境      | 入口地址                      | 用途             |
+| ----------------- | ------------- | ----------------------------- | ---------------- |
+| **smoke（默认）** | Docker dev 栈 | `http://localhost:3000`       | 快速功能验证     |
+| **prod-like**     | Docker 生产栈 | `http://localhost:80` (nginx) | 生产环境近似测试 |
 
 ### Smoke 测试（Dev 环境）
 
@@ -181,13 +181,13 @@ tests/
 
 ## 环境变量
 
-| 变量 | 说明 | 默认值 |
-|------|------|--------|
-| `BASE_URL` | Admin dashboard URL | `http://localhost:3000` |
-| `API_BASE_URL` | Backend API URL | `http://localhost:8000` |
-| `ADMIN_EMAIL` | 测试 admin 邮箱 | `test@example.com` |
-| `ADMIN_PASSWORD` | 测试 admin 密码 | `testpassword123` |
-| `E2E_ENV` | 测试环境 (`dev`/`prod`) | `dev` |
-| `HOST_ALLOWED_URL` | 允许嵌入的宿主页 URL | - |
-| `HOST_BLOCKED_URL` | 被阻止的宿主页 URL | - |
-| `CRAWL_TARGET_URL` | URL 抓取测试站点 | `http://host.docker.internal:8081` |
+| 变量               | 说明                    | 默认值                             |
+| ------------------ | ----------------------- | ---------------------------------- |
+| `BASE_URL`         | Admin dashboard URL     | `http://localhost:3000`            |
+| `API_BASE_URL`     | Backend API URL         | `http://localhost:8000`            |
+| `ADMIN_EMAIL`      | 测试 admin 邮箱         | `test@example.com`                 |
+| `ADMIN_PASSWORD`   | 测试 admin 密码         | `testpassword123`                  |
+| `E2E_ENV`          | 测试环境 (`dev`/`prod`) | `dev`                              |
+| `HOST_ALLOWED_URL` | 允许嵌入的宿主页 URL    | -                                  |
+| `HOST_BLOCKED_URL` | 被阻止的宿主页 URL      | -                                  |
+| `CRAWL_TARGET_URL` | URL 抓取测试站点        | `http://host.docker.internal:8081` |

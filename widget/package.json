@@ -1,17 +1,17 @@
 {
-  "name": "@basjoo/widget",
+  "name": "@Custome_Support/widget",
   "version": "1.0.0",
-  "description": "Basjoo AI Chat Widget - 可嵌入的智能聊天组件",
-  "main": "dist/basjoo-widget.js",
+  "description": "Custome_Support AI Chat Widget - 可嵌入的智能聊天组件",
+  "main": "dist/Custome_Support-widget.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "npm run typecheck && npm run build:dev && npm run build:prod",
-    "build:dev": "esbuild src/BasjooWidget.tsx --bundle --format=esm --outfile=dist/basjoo-widget.js --sourcemap",
-    "build:prod": "esbuild src/BasjooWidget.tsx --bundle --format=iife --outfile=dist/basjoo-widget.min.js --minify --sourcemap",
-    "dev": "esbuild src/BasjooWidget.tsx --bundle --format=iife --outfile=example/basjoo-widget.js --servedir=example",
+    "build:dev": "esbuild src/Custome_SupportWidget.tsx --bundle --format=esm --outfile=dist/Custome_Support-widget.js --sourcemap",
+    "build:prod": "esbuild src/Custome_SupportWidget.tsx --bundle --format=iife --outfile=dist/Custome_Support-widget.min.js --minify --sourcemap",
+    "dev": "esbuild src/Custome_SupportWidget.tsx --bundle --format=iife --outfile=example/Custome_Support-widget.js --servedir=example",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "prepublishOnly": "npm run build"
@@ -21,9 +21,9 @@
     "chatbot",
     "widget",
     "customer-service",
-    "basjoo"
+    "Custome_Support"
   ],
-  "author": "Basjoo Team",
+  "author": "Custome_Support Team",
   "license": "MIT",
   "devDependencies": {
     "@types/jsdom": "^28.0.3",

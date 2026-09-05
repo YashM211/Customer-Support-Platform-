@@ -210,7 +210,7 @@ def run_sqlite_migrations(database_url: str) -> None:
             else:
                 # Create default workspace if none exists
                 cursor.execute(
-                    "INSERT INTO workspaces (name, owner_email, created_at) VALUES ('Default Workspace', 'admin@basjoo.local', CURRENT_TIMESTAMP)"
+                    "INSERT INTO workspaces (name, owner_email, created_at) VALUES ('Default Workspace', 'admin@Custome_Support.local', CURRENT_TIMESTAMP)"
                 )
                 canonical_workspace_id = cursor.lastrowid
                 print(f"✓ Created default workspace with id={canonical_workspace_id}")
@@ -364,7 +364,7 @@ def _migrate_agents(cursor: sqlite3.Cursor):
         ("widget_color", "VARCHAR(20) DEFAULT '#06B6D4'"),
         (
             "welcome_message",
-            "TEXT DEFAULT '您好！我是Basjoo助手，有什么可以帮您的吗？'",
+            "TEXT DEFAULT '您好！我是Custome_Support助手，有什么可以帮您的吗？'",
         ),
         ("history_days", "INTEGER DEFAULT 30"),
     ]
@@ -518,7 +518,7 @@ def _backfill_agents(cursor: sqlite3.Cursor):
         )
     if "welcome_message" in col_names:
         cursor.execute(
-            "UPDATE agents SET welcome_message = '您好！我是Basjoo助手，有什么可以帮您的吗？' "
+            "UPDATE agents SET welcome_message = '您好！我是Custome_Support助手，有什么可以帮您的吗？' "
             "WHERE welcome_message IS NULL OR welcome_message = ''"
         )
 

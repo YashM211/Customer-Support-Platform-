@@ -195,7 +195,7 @@ test.describe("Playground KB Context Retrieval", () => {
 
 		// 2. Upload a file with unique content via agent-scoped file upload endpoint
 		// Upload file with unique test content
-		const uniquePhrase = `BasjooE2ETestKBPhrase-${Date.now()}`;
+		const uniquePhrase = `Custome_SupportE2ETestKBPhrase-${Date.now()}`;
 		const testContent = `This is a test document for knowledge base verification. The unique test phrase is: ${uniquePhrase}. This content should be retrievable in Playground chat after indexing.`;
 		const fileName = `test-kb-${Date.now()}.txt`;
 

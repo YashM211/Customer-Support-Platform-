@@ -1,4 +1,4 @@
-# Basjoo
+# Custome_Support
 
 [![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
@@ -10,9 +10,9 @@
 [![Qdrant](https://img.shields.io/badge/Qdrant-Vector_Search-blue)](https://qdrant.tech/)
 [![Scrapling](https://img.shields.io/badge/Scrapling-Web_Crawling-green)](https://github.com/D4Vinci/Scrapling)
 
-English | [简体中文](README.zh-CN.md)
+English
 
-Basjoo is an AI customer-support platform with three main parts:
+Custome_Support is an AI customer-support platform with three main parts:
 
 - a **FastAPI backend** for agent configuration, chat, indexing, auth, and scheduling
 - a **Next.js admin/dashboard frontend** in `frontend-nextjs/`
@@ -22,22 +22,22 @@ The stack also uses **SQLite** for application data, **Redis** for rate limiting
 
 ## System requirements
 
-Basjoo runs as a set of Docker containers. All LLM inference and embedding calls are made to external APIs (OpenAI, DeepSeek, Anthropic, Gemini, Jina, SiliconFlow), so **no GPU is required**.
+Custome_Support runs as a set of Docker containers. All LLM inference and embedding calls are made to external APIs (OpenAI, DeepSeek, Anthropic, Gemini, Jina, SiliconFlow), so **no GPU is required**.
 
-| | Minimum | Recommended |
-|---|---|---|
-| CPU | 2 vCPU | 2–4 vCPU |
-| RAM | 4 GB | 8 GB |
-| Disk | 20 GB | 50 GB |
-| OS | Ubuntu 22.04+ / Debian 11+ | Ubuntu 22.04+ / Debian 12+ |
-| Docker | 20.10+ | latest |
+|        | Minimum                    | Recommended                |
+| ------ | -------------------------- | -------------------------- |
+| CPU    | 2 vCPU                     | 2–4 vCPU                   |
+| RAM    | 4 GB                       | 8 GB                       |
+| Disk   | 20 GB                      | 50 GB                      |
+| OS     | Ubuntu 22.04+ / Debian 11+ | Ubuntu 22.04+ / Debian 12+ |
+| Docker | 20.10+                     | latest                     |
 
 ## Automatic deployment
 
 For a blank Ubuntu or Debian server, run:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoyiyin/basjoo/main/install-deploy.sh | sudo sh
+curl -fsSL https://raw.githubusercontent.com/YashM211/Customer-Support-Platform-/main/install-deploy.sh | sudo sh
 ```
 
 If you already have this repository checked out locally, you can also run:
@@ -117,12 +117,6 @@ The Sessions page shows live conversations, supports human takeover, and gives o
 Agent Settings covers language/theme preferences, widget appearance, embed behavior, and other operational controls.
 
 ![English agent settings screenshot](resource/screenshots/admin/en-US/system-settings.png)
-
-### Embedded widget experience
-
-The widget provides the visitor-facing chat window with persisted sessions, multilingual copy, streaming responses, and knowledge-assisted replies.
-
-![English widget screenshot](resource/screenshots/widget/en-US/widget-window.png)
 
 ## Tech stack
 
@@ -238,8 +232,8 @@ npm run test         # vitest
 npm install
 npm run dev          # dev bundle + example server
 npm run build        # full build (typecheck + dev + prod bundles)
-npm run build:dev    # unminified ESM bundle (dist/basjoo-widget.js)
-npm run build:prod   # minified IIFE bundle (dist/basjoo-widget.min.js)
+npm run build:dev    # unminified ESM bundle (dist/Custome_Support-widget.js)
+npm run build:prod   # minified IIFE bundle (dist/Custome_Support-widget.min.js)
 npm run typecheck
 npm run test         # vitest
 ```
@@ -370,7 +364,7 @@ The active UI is the Next.js app in `frontend-nextjs/`.
 
 ### Widget
 
-`widget/src/BasjooWidget.tsx` is a self-contained embeddable widget that:
+`widget/src/Custome_SupportWidget.tsx` is a self-contained embeddable widget that:
 
 - auto-detects `apiBase` from the script source URL, infers from dev port 3000 → backend 8000, or falls back to `window.location.origin`
 - fetches `/api/v1/config:public` on init to resolve `default_agent_id`, widget title/color, and welcome message
@@ -395,7 +389,7 @@ Backend tests are under `backend/tests/`.
 
 Key testing behavior from `backend/tests/conftest.py`:
 
-- sets `BASJOO_TEST_MODE=1`
+- sets `Custome_Support_TEST_MODE=1`
 - uses isolated SQLite databases under `backend/.pytest_dbs/`
 - monkeypatches LLM integrations for many tests
 - falls back between Docker hostnames and localhost for Redis where needed
@@ -441,7 +435,7 @@ Recommended production workflow:
 1. Preserve the backend data volume mounted at `/app/data`.
 2. Redeploy with `docker compose --profile prod up -d --build`.
 3. If you are migrating to a new server and know the old widget `agentId`, set `DEFAULT_AGENT_ID` before starting the backend.
-4. Back up at least `/app/data/basjoo.db` and `/app/data/.agent_id`.
+4. Back up at least `/app/data/Custome_Support.db` and `/app/data/.agent_id`.
 
 Example `.env` snippet for migration:
 
@@ -470,23 +464,23 @@ Examples of backend endpoints present in the codebase:
 
 ## Acknowledgments
 
-Basjoo is built on top of these amazing open-source projects:
+Custome_Support is built on top of these amazing open-source projects:
 
-- **[Qdrant](https://qdrant.tech/)** — High-performance vector similarity search engine. Powers Basjoo's self-developed multi-tenant knowledge base.
-- **[Scrapling](https://github.com/D4Vinci/Scrapling)** — Stealthy web scraping with TLS fingerprint impersonation (curl_cffi). Powers Basjoo's URL content extraction microservice.
-- **[FastAPI](https://github.com/tiangolo/fastapi)** — The web framework powering Basjoo's backend APIs.
-- **[Next.js](https://github.com/vercel/next.js)** — The React framework powering Basjoo's admin dashboard.
+- **[Qdrant](https://qdrant.tech/)** — High-performance vector similarity search engine. Powers Custome_Support's self-developed multi-tenant knowledge base.
+- **[Scrapling](https://github.com/D4Vinci/Scrapling)** — Stealthy web scraping with TLS fingerprint impersonation (curl_cffi). Powers Custome_Support's URL content extraction microservice.
+- **[FastAPI](https://github.com/tiangolo/fastapi)** — The web framework powering Custome_Support's backend APIs.
+- **[Next.js](https://github.com/vercel/next.js)** — The React framework powering Custome_Support's admin dashboard.
 - **[pgvector](https://github.com/pgvector/pgvector)** — Open-source vector similarity search for PostgreSQL.
 
 ## Contributors
 
-<a href="https://github.com/haoyiyin/basjoo/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=haoyiyin/basjoo" />
+<a href="https://github.com/haoyiyin/Custome_Support/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=haoyiyin/Custome_Support" />
 </a>
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=haoyiyin/basjoo&type=Date)](https://star-history.com/#haoyiyin/basjoo&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=haoyiyin/Custome_Support&type=Date)](https://star-history.com/#haoyiyin/Custome_Support&Date)
 
 ## Current status
 

@@ -79,7 +79,7 @@ test.describe("Widget Cross-Origin", () => {
 		await page.setContent(`
 			<!doctype html>
 			<html>
-				<head><title>Basjoo widget embed diagnostic</title></head>
+				<head><title>Custome_Support widget embed diagnostic</title></head>
 				<body>
 					<h1>Third-party host page</h1>
 					<script src="${embedScriptUrl.toString()}" async></script>
@@ -98,7 +98,7 @@ test.describe("Widget Cross-Origin", () => {
 		// Try waiting for widget button with extended timeout for debugging
 		let buttonVisible = false;
 		try {
-			await expect(page.locator("#basjoo-widget-button")).toBeVisible({
+			await expect(page.locator("#Custome_Support-widget-button")).toBeVisible({
 				timeout: 15_000,
 			});
 			buttonVisible = true;
@@ -107,8 +107,8 @@ test.describe("Widget Cross-Origin", () => {
 		}
 
 		// Capture final state for diagnostics
-		const widgetContainer = await page.locator("#basjoo-widget-container").count();
-		const widgetButton = await page.locator("#basjoo-widget-button").count();
+		const widgetContainer = await page.locator("#Custome_Support-widget-container").count();
+		const widgetButton = await page.locator("#Custome_Support-widget-button").count();
 
 		console.log("Widget diagnostic results:", {
 			scriptLoaded,
@@ -151,18 +151,18 @@ test.describe("Widget Cross-Origin", () => {
 		await page.goto(`${process.env.HOST_ALLOWED_URL!}?agentId=${agent.id}`);
 
 		// Wait for widget button to appear
-		await expect(page.locator("#basjoo-widget-button")).toBeVisible({
+		await expect(page.locator("#Custome_Support-widget-button")).toBeVisible({
 			timeout: 10_000,
 		});
 
 		// Open chat
-		await page.click("#basjoo-widget-button");
-		await expect(page.locator("#basjoo-chat-window")).toBeVisible({
+		await page.click("#Custome_Support-widget-button");
+		await expect(page.locator("#Custome_Support-chat-window")).toBeVisible({
 			timeout: 5_000,
 		});
 
 		// Welcome message should be visible (check for messages container class)
-		await expect(page.locator(".basjoo-messages")).toBeVisible({
+		await expect(page.locator(".Custome_Support-messages")).toBeVisible({
 			timeout: 5_000,
 		});
 	});
@@ -214,23 +214,23 @@ test.describe("Widget Cross-Origin", () => {
 		await page.goto(`${process.env.HOST_BLOCKED_URL!}?agentId=${agent.id}`);
 
 		// Wait for widget button to be visible (more robust than arbitrary timeout)
-		const widgetButton = page.locator("#basjoo-widget-button");
+		const widgetButton = page.locator("#Custome_Support-widget-button");
 		await expect(widgetButton).toBeVisible({ timeout: 10_000 });
 
 		// Click to open chat window
 		await widgetButton.click();
 
 		// Wait for chat window to be visible
-		const chatWindow = page.locator("#basjoo-chat-window");
+		const chatWindow = page.locator("#Custome_Support-chat-window");
 		await expect(chatWindow).toBeVisible({ timeout: 5_000 });
 
 		// Wait for input to be visible and ready
-		const input = page.locator(".basjoo-input");
+		const input = page.locator(".Custome_Support-input");
 		await expect(input).toBeVisible({ timeout: 5_000 });
 
 		// Fill and send message
 		await input.fill("test message from blocked host");
-		const sendButton = page.locator(".basjoo-send");
+		const sendButton = page.locator(".Custome_Support-send");
 		await expect(sendButton).toBeVisible({ timeout: 5_000 });
 		await sendButton.click();
 
@@ -241,7 +241,7 @@ test.describe("Widget Cross-Origin", () => {
 		console.log("All console messages captured:", consoleMessages);
 
 		// Blocked origin should produce console error
-		// Widget logs: '[Basjoo Widget] Widget request was blocked because the current page origin is not on the allowed domain list.'
+		// Widget logs: '[Custome_Support Widget] Widget request was blocked because the current page origin is not on the allowed domain list.'
 		const hasOriginError = consoleMessages.some(
 			(msg) =>
 				msg.includes("ORIGIN_NOT_ALLOWED") ||

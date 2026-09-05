@@ -1,4 +1,4 @@
-# Basjoo
+# Custome_Support
 
 [![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
@@ -10,7 +10,7 @@
 [![Qdrant](https://img.shields.io/badge/Qdrant-向量检索-blue)](https://qdrant.tech/)
 [![Scrapling](https://img.shields.io/badge/Scrapling-网页抓取-green)](https://github.com/D4Vinci/Scrapling)
 
-Basjoo 是一个面向 AI 客服场景的平台，主要由三部分组成：
+Custome_Support 是一个面向 AI 客服场景的平台，主要由三部分组成：
 
 - `backend/` 中的 **FastAPI 后端**，负责智能体配置、聊天、索引、认证和定时任务
 - `frontend-nextjs/` 中的 **Next.js 管理后台前端**
@@ -27,22 +27,22 @@ Basjoo 是一个面向 AI 客服场景的平台，主要由三部分组成：
 
 ## 系统要求
 
-Basjoo 以 Docker 容器方式运行。所有 LLM 推理和 Embedding 调用均走外部 API（OpenAI、DeepSeek、Anthropic、Gemini、Jina、SiliconFlow），**无需 GPU**。
+Custome_Support 以 Docker 容器方式运行。所有 LLM 推理和 Embedding 调用均走外部 API（OpenAI、DeepSeek、Anthropic、Gemini、Jina、SiliconFlow），**无需 GPU**。
 
-| | 最低配置 | 推荐配置 |
-|---|---|---|
-| CPU | 2 vCPU | 2–4 vCPU |
-| 内存 | 4 GB | 8 GB |
-| 磁盘 | 20 GB | 50 GB |
+|          | 最低配置                   | 推荐配置                   |
+| -------- | -------------------------- | -------------------------- |
+| CPU      | 2 vCPU                     | 2–4 vCPU                   |
+| 内存     | 4 GB                       | 8 GB                       |
+| 磁盘     | 20 GB                      | 50 GB                      |
 | 操作系统 | Ubuntu 22.04+ / Debian 11+ | Ubuntu 22.04+ / Debian 12+ |
-| Docker | 20.10+ | 最新版 |
+| Docker   | 20.10+                     | 最新版                     |
 
 ## 自动部署
 
 对于一台全新的 Ubuntu 或 Debian 服务器，可直接执行：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoyiyin/basjoo/main/install-deploy.sh | sudo sh
+curl -fsSL https://raw.githubusercontent.com/haoyiyin/Custome_Support/main/install-deploy.sh | sudo sh
 ```
 
 如果你已经在本地检出了仓库，也可以直接运行：
@@ -242,8 +242,8 @@ npm run test         # vitest
 npm install
 npm run dev          # 开发打包 + 示例服务
 npm run build        # 完整构建（类型检查 + 开发 + 生产打包）
-npm run build:dev    # 未压缩 ESM 打包 (dist/basjoo-widget.js)
-npm run build:prod   # 压缩 IIFE 打包 (dist/basjoo-widget.min.js)
+npm run build:dev    # 未压缩 ESM 打包 (dist/Custome_Support-widget.js)
+npm run build:prod   # 压缩 IIFE 打包 (dist/Custome_Support-widget.min.js)
 npm run typecheck
 npm run test         # vitest
 ```
@@ -374,7 +374,7 @@ Embedding 设置与聊天模型服务商相互独立。管理员可以在 Playgr
 
 ### Widget
 
-`widget/src/BasjooWidget.tsx` 是一个自包含的可嵌入聊天组件，支持：
+`widget/src/Custome_SupportWidget.tsx` 是一个自包含的可嵌入聊天组件，支持：
 
 - 从脚本 src URL 自动检测 `apiBase`，开发环境下 3000 端口自动推断后端 8000，或回退到 `window.location.origin`
 - 初始化时请求 `/api/v1/config:public` 获取 `default_agent_id`、widget 标题/颜色和欢迎语
@@ -399,7 +399,7 @@ Embedding 设置与聊天模型服务商相互独立。管理员可以在 Playgr
 
 根据 `backend/tests/conftest.py`，当前测试具有以下特点：
 
-- 设置 `BASJOO_TEST_MODE=1`
+- 设置 `Custome_Support_TEST_MODE=1`
 - 使用 `backend/.pytest_dbs/` 下的隔离 SQLite 数据库
 - 对很多测试场景下的 LLM 依赖进行 monkeypatch
 - Redis 主机名在 Docker 和 localhost 之间自动回退
@@ -443,7 +443,7 @@ pytest tests/test_api.py::test_name
 1. 保留挂载到 `/app/data` 的 backend 数据卷。
 2. 使用 `docker compose --profile prod up -d --build` 重新部署。
 3. 如果是在新机器迁移且你知道旧 widget 的 `agentId`，请在启动前设置 `DEFAULT_AGENT_ID`。
-4. 至少备份 `/app/data/basjoo.db` 和 `/app/data/.agent_id`。
+4. 至少备份 `/app/data/Custome_Support.db` 和 `/app/data/.agent_id`。
 
 迁移时的 `.env` 示例：
 
@@ -472,23 +472,23 @@ DEFAULT_AGENT_ID=agt_123456789abc
 
 ## 致谢
 
-Basjoo 基于以下优秀的开源项目构建：
+Custome_Support 基于以下优秀的开源项目构建：
 
-- **[Qdrant](https://qdrant.tech/)** — 高性能向量相似性搜索引擎。驱动 Basjoo 自研多租户知识库。
-- **[Scrapling](https://github.com/D4Vinci/Scrapling)** — 隐身网页抓取，支持 TLS 指纹伪装（curl_cffi）。驱动 Basjoo 的 URL 内容提取微服务。
-- **[FastAPI](https://github.com/tiangolo/fastapi)** — 驱动 Basjoo 后端 API 的 Web 框架。
-- **[Next.js](https://github.com/vercel/next.js)** — 驱动 Basjoo 管理后台的 React 框架。
+- **[Qdrant](https://qdrant.tech/)** — 高性能向量相似性搜索引擎。驱动 Custome_Support 自研多租户知识库。
+- **[Scrapling](https://github.com/D4Vinci/Scrapling)** — 隐身网页抓取，支持 TLS 指纹伪装（curl_cffi）。驱动 Custome_Support 的 URL 内容提取微服务。
+- **[FastAPI](https://github.com/tiangolo/fastapi)** — 驱动 Custome_Support 后端 API 的 Web 框架。
+- **[Next.js](https://github.com/vercel/next.js)** — 驱动 Custome_Support 管理后台的 React 框架。
 - **[pgvector](https://github.com/pgvector/pgvector)** — PostgreSQL 开源向量相似性搜索。
 
 ## 贡献者
 
-<a href="https://github.com/haoyiyin/basjoo/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=haoyiyin/basjoo" />
+<a href="https://github.com/haoyiyin/Custome_Support/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=haoyiyin/Custome_Support" />
 </a>
 
 ## Star 趋势
 
-[![Star History Chart](https://api.star-history.com/svg?repos=haoyiyin/basjoo&type=Date)](https://star-history.com/#haoyiyin/basjoo&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=haoyiyin/Custome_Support&type=Date)](https://star-history.com/#haoyiyin/Custome_Support&Date)
 
 ## 当前说明
 

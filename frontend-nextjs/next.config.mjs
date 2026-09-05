@@ -1,10 +1,11 @@
-import path from 'node:path';
+import path from "node:path";
 
-const backendProxyTarget = process.env.BACKEND_PROXY_TARGET || 'http://localhost:8000';
+const backendProxyTarget =
+  process.env.BACKEND_PROXY_TARGET || "http://localhost:8000";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
+  output: "standalone",
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -16,31 +17,33 @@ const nextConfig = {
     return `build-${Date.now()}`;
   },
   webpack(config) {
-    config.resolve.alias['react-router-dom'] = path.resolve('./src/router/react-router-dom.tsx');
+    config.resolve.alias["react-router-dom"] = path.resolve(
+      "./src/router/react-router-dom.tsx",
+    );
     return config;
   },
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
+        source: "/api/:path*",
         destination: `${backendProxyTarget}/api/:path*`,
       },
       {
-        source: '/sdk.js',
+        source: "/sdk.js",
         destination: `${backendProxyTarget}/sdk.js`,
       },
       {
-        source: '/widget-demo',
+        source: "/widget-demo",
         destination: `${backendProxyTarget}/widget-demo`,
       },
       {
-        source: '/basjoo-logo.png',
-        destination: `${backendProxyTarget}/basjoo-logo.png`,
+        source: "/Custome_Support-logo.png",
+        destination: `${backendProxyTarget}/Custome_Support-logo.png`,
       },
       {
-        source: '/health',
+        source: "/health",
         destination: `${backendProxyTarget}/health`,
-      }
+      },
     ];
   },
 };

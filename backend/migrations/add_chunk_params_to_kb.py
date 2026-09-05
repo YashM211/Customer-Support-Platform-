@@ -10,10 +10,10 @@ import sqlite3
 
 def migrate():
     possible_paths = [
-        "/app/data/basjoo.db",
+        "/app/data/Custome_Support.db",
         "./test.db",
-        "./data/basjoo.db",
-        "../data/basjoo.db",
+        "./data/Custome_Support.db",
+        "../data/Custome_Support.db",
     ]
     db_path = next((p for p in possible_paths if os.path.exists(p)), None)
     if not db_path:

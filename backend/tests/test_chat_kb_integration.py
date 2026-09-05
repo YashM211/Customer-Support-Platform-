@@ -29,7 +29,7 @@ async def test_playground_chat_uses_kb_context_after_indexing():
     mock_agent.top_k = 3
     mock_agent.similarity_threshold = 0.04  # RRF-style
     mock_agent.temperature = 0.7
-    mock_agent.system_prompt = "You are Basjoo assistant."
+    mock_agent.system_prompt = "You are Custome_Support assistant."
     mock_agent.enable_context = False  # Disable history for simpler test
     mock_agent.api_key = "test_key"
     mock_agent.api_base = "https://api.test.com"
@@ -49,7 +49,7 @@ async def test_playground_chat_uses_kb_context_after_indexing():
 
     chat_request = ChatRequest(
         agent_id="agent_with_kb",
-        message="What is the BasjooPlaygroundTestPhrase?",
+        message="What is the Custome_SupportPlaygroundTestPhrase?",
         session_id=None,
         params={},
     )
@@ -74,7 +74,7 @@ async def test_playground_chat_uses_kb_context_after_indexing():
                     # Simulate retrieval returning content from an indexed document
                     mock_kb_svc.retrieve = AsyncMock(return_value=[
                         {
-                            "text": "The BasjooPlaygroundTestPhrase is 'knowledge-verified-2024' and proves KB retrieval works.",
+                            "text": "The Custome_SupportPlaygroundTestPhrase is 'knowledge-verified-2024' and proves KB retrieval works.",
                             "doc_id": "doc_indexed_001",
                             "chunk_index": 0,
                             "score": 0.042,
@@ -103,7 +103,7 @@ async def test_playground_chat_uses_kb_context_after_indexing():
                     system_content = system_msg["content"]
 
                     # The unique test phrase should be in the system message
-                    assert "BasjooPlaygroundTestPhrase" in system_content
+                    assert "Custome_SupportPlaygroundTestPhrase" in system_content
                     assert "knowledge-verified-2024" in system_content
                     assert "background" in system_content.lower() or "背景" in system_content
 
@@ -256,7 +256,7 @@ async def test_kb_ingestion_to_retrieval_regression_path():
     mock_agent.top_k = 5
     mock_agent.similarity_threshold = 0.04
     mock_agent.temperature = 0.7
-    mock_agent.system_prompt = "You are Basjoo assistant."
+    mock_agent.system_prompt = "You are Custome_Support assistant."
     mock_agent.enable_context = False
     mock_agent.api_key = "test_key"
     mock_agent.api_base = "https://api.test.com"

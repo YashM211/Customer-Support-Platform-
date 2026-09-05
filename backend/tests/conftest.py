@@ -14,7 +14,7 @@ BACKEND_DIR = Path(__file__).resolve().parents[1]
 TEST_DB_DIR = BACKEND_DIR / ".pytest_dbs"
 TEST_UPLOAD_DIR = BACKEND_DIR / ".pytest_uploads"
 
-os.environ["BASJOO_TEST_MODE"] = "1"
+os.environ["Custome_Support_TEST_MODE"] = "1"
 os.environ["KB_UPLOAD_ROOT"] = str(TEST_UPLOAD_DIR)
 
 
@@ -31,8 +31,8 @@ os.environ.setdefault(
     "redis://redis:6379/0" if _host_resolves("redis") else "redis://localhost:6379/0",
 )
 os.environ.setdefault("SECRET_KEY", "test-secret-key")
-os.environ["SECRET_KEY_FILE"] = "/tmp/basjoo_test_secret.key"
-os.environ["ENCRYPTION_KEY_FILE"] = "/tmp/basjoo_test_encryption.key"
+os.environ["SECRET_KEY_FILE"] = "/tmp/Custome_Support_test_secret.key"
+os.environ["ENCRYPTION_KEY_FILE"] = "/tmp/Custome_Support_test_encryption.key"
 os.environ["CREATE_DEFAULT_AGENT_ON_BOOTSTRAP"] = "true"
 
 import database

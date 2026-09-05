@@ -1,9 +1,9 @@
 #!/bin/sh
 set -eu
 
-BASJOO_REPO_URL=${BASJOO_REPO_URL:-https://github.com/haoyiyin/basjoo}
-BASJOO_BRANCH=${BASJOO_BRANCH:-main}
-BASJOO_FORCE_CLEAN=${BASJOO_FORCE_CLEAN:-1}
+Custome_Support_REPO_URL=${Custome_Support_REPO_URL:-https://github.com/haoyiyin/Custome_Support}
+Custome_Support_BRANCH=${Custome_Support_BRANCH:-main}
+Custome_Support_FORCE_CLEAN=${Custome_Support_FORCE_CLEAN:-1}
 INSTALL_DOCKER_URL=${INSTALL_DOCKER_URL:-https://get.docker.com}
 
 have_cmd() {
@@ -44,14 +44,14 @@ run_root() {
 }
 
 if [ "$IS_REPO_SCRIPT" -eq 1 ]; then
-	DEFAULT_BASJOO_DIR=$SCRIPT_DIR
+	DEFAULT_Custome_Support_DIR=$SCRIPT_DIR
 elif [ "$(id -u)" -eq 0 ]; then
-	DEFAULT_BASJOO_DIR=/opt/basjoo
+	DEFAULT_Custome_Support_DIR=/opt/Custome_Support
 else
-	DEFAULT_BASJOO_DIR=$HOME/basjoo
+	DEFAULT_Custome_Support_DIR=$HOME/Custome_Support
 fi
 
-BASJOO_DIR=${BASJOO_DIR:-$DEFAULT_BASJOO_DIR}
+Custome_Support_DIR=${Custome_Support_DIR:-$DEFAULT_Custome_Support_DIR}
 
 APT_CMD=
 APT_UPDATED=0
@@ -151,7 +151,7 @@ ensure_docker() {
 }
 
 ensure_repo_dir_ready() {
-	parent_dir=$(dirname "$BASJOO_DIR")
+	parent_dir=$(dirname "$Custome_Support_DIR")
 	if [ ! -d "$parent_dir" ]; then
 		log "Creating parent directory $parent_dir"
 		run_root mkdir -p "$parent_dir"
@@ -163,45 +163,45 @@ ensure_repo_dir_ready() {
 
 clone_repo() {
 	ensure_repo_dir_ready
-	if [ ! -d "$BASJOO_DIR" ]; then
-		run_root mkdir -p "$BASJOO_DIR"
+	if [ ! -d "$Custome_Support_DIR" ]; then
+		run_root mkdir -p "$Custome_Support_DIR"
 		if [ -n "$SUDO" ]; then
-			run_root chown "$(id -u):$(id -g)" "$BASJOO_DIR"
+			run_root chown "$(id -u):$(id -g)" "$Custome_Support_DIR"
 		fi
 	fi
-	log "Cloning $BASJOO_REPO_URL into $BASJOO_DIR"
-	git clone --branch "$BASJOO_BRANCH" "$BASJOO_REPO_URL" "$BASJOO_DIR"
+	log "Cloning $Custome_Support_REPO_URL into $Custome_Support_DIR"
+	git clone --branch "$Custome_Support_BRANCH" "$Custome_Support_REPO_URL" "$Custome_Support_DIR"
 }
 
 sync_repo() {
-	if [ -e "$BASJOO_DIR" ] && [ ! -d "$BASJOO_DIR" ]; then
-		fail "Target path $BASJOO_DIR exists and is not a directory."
+	if [ -e "$Custome_Support_DIR" ] && [ ! -d "$Custome_Support_DIR" ]; then
+		fail "Target path $Custome_Support_DIR exists and is not a directory."
 	fi
 
-	if [ ! -e "$BASJOO_DIR" ]; then
+	if [ ! -e "$Custome_Support_DIR" ]; then
 		clone_repo
 		return 0
 	fi
 
-	if [ -d "$BASJOO_DIR/.git" ]; then
-		log "Syncing repository to $BASJOO_REPO_URL#$BASJOO_BRANCH"
-		if git -C "$BASJOO_DIR" remote get-url origin >/dev/null 2>&1; then
-			git -C "$BASJOO_DIR" remote set-url origin "$BASJOO_REPO_URL"
+	if [ -d "$Custome_Support_DIR/.git" ]; then
+		log "Syncing repository to $Custome_Support_REPO_URL#$Custome_Support_BRANCH"
+		if git -C "$Custome_Support_DIR" remote get-url origin >/dev/null 2>&1; then
+			git -C "$Custome_Support_DIR" remote set-url origin "$Custome_Support_REPO_URL"
 		else
-			git -C "$BASJOO_DIR" remote add origin "$BASJOO_REPO_URL"
+			git -C "$Custome_Support_DIR" remote add origin "$Custome_Support_REPO_URL"
 		fi
-		git -C "$BASJOO_DIR" fetch --prune origin "$BASJOO_BRANCH"
-		git -C "$BASJOO_DIR" reset --hard
-		git -C "$BASJOO_DIR" checkout -B "$BASJOO_BRANCH" FETCH_HEAD
-		if [ "$BASJOO_FORCE_CLEAN" = "1" ] || [ "$BASJOO_FORCE_CLEAN" = "true" ] || [ "$BASJOO_FORCE_CLEAN" = "yes" ]; then
-			git -C "$BASJOO_DIR" clean -fd
+		git -C "$Custome_Support_DIR" fetch --prune origin "$Custome_Support_BRANCH"
+		git -C "$Custome_Support_DIR" reset --hard
+		git -C "$Custome_Support_DIR" checkout -B "$Custome_Support_BRANCH" FETCH_HEAD
+		if [ "$Custome_Support_FORCE_CLEAN" = "1" ] || [ "$Custome_Support_FORCE_CLEAN" = "true" ] || [ "$Custome_Support_FORCE_CLEAN" = "yes" ]; then
+			git -C "$Custome_Support_DIR" clean -fd
 		fi
-		git -C "$BASJOO_DIR" reset --hard FETCH_HEAD
+		git -C "$Custome_Support_DIR" reset --hard FETCH_HEAD
 		return 0
 	fi
 
-	if [ -d "$BASJOO_DIR" ] && [ -n "$(ls -A "$BASJOO_DIR" 2>/dev/null)" ]; then
-		fail "Target directory $BASJOO_DIR exists but is not a git repository."
+	if [ -d "$Custome_Support_DIR" ] && [ -n "$(ls -A "$Custome_Support_DIR" 2>/dev/null)" ]; then
+		fail "Target directory $Custome_Support_DIR exists but is not a git repository."
 	fi
 
 	clone_repo
@@ -275,44 +275,44 @@ http_get() {
 
 show_failure_logs() {
 	log "Recent backend logs"
-	run_root docker compose --project-directory "$BASJOO_DIR" --profile prod logs --tail=100 backend-prod || true
+	run_root docker compose --project-directory "$Custome_Support_DIR" --profile prod logs --tail=100 backend-prod || true
 	log "Recent frontend logs"
-	run_root docker compose --project-directory "$BASJOO_DIR" --profile prod logs --tail=100 frontend-prod || true
+	run_root docker compose --project-directory "$Custome_Support_DIR" --profile prod logs --tail=100 frontend-prod || true
 	log "Recent nginx logs"
-	run_root docker compose --project-directory "$BASJOO_DIR" --profile prod logs --tail=100 nginx || true
+	run_root docker compose --project-directory "$Custome_Support_DIR" --profile prod logs --tail=100 nginx || true
 }
 
 verify_deployment() {
 	log "Waiting for container health checks"
-	wait_for_container basjoo-redis healthy 120 || {
+	wait_for_container Custome_Support-redis healthy 120 || {
 		show_failure_logs
 		fail "Redis did not become healthy in time."
 	}
-	wait_for_container basjoo-postgres healthy 120 || {
+	wait_for_container Custome_Support-postgres healthy 120 || {
 		show_failure_logs
 		fail "PostgreSQL did not become healthy in time."
 	}
-	wait_for_container basjoo-qdrant healthy 120 || {
+	wait_for_container Custome_Support-qdrant healthy 120 || {
 		show_failure_logs
 		fail "Qdrant did not become healthy in time."
 	}
-	wait_for_container basjoo-backend healthy 180 || {
+	wait_for_container Custome_Support-backend healthy 180 || {
 		show_failure_logs
 		fail "Backend did not become healthy in time."
 	}
-	wait_for_container basjoo-frontend healthy 180 || {
+	wait_for_container Custome_Support-frontend healthy 180 || {
 		show_failure_logs
 		fail "Frontend did not become healthy in time."
 	}
-	wait_for_container basjoo-nginx running 120 || {
+	wait_for_container Custome_Support-nginx running 120 || {
 		show_failure_logs
 		fail "nginx did not enter the running state in time."
 	}
 
 	log "Checking production stack status"
-	run_root docker compose --project-directory "$BASJOO_DIR" --profile prod ps
+	run_root docker compose --project-directory "$Custome_Support_DIR" --profile prod ps
 
-	server_domain=$(read_env_value SERVER_DOMAIN "$BASJOO_DIR/.env")
+	server_domain=$(read_env_value SERVER_DOMAIN "$Custome_Support_DIR/.env")
 	if [ -n "$server_domain" ]; then
 		log "Checking /health through nginx with Host: $server_domain"
 		http_get "http://127.0.0.1/health" "$server_domain" || {
@@ -329,13 +329,13 @@ verify_deployment() {
 }
 
 print_summary() {
-	server_domain=$(read_env_value SERVER_DOMAIN "$BASJOO_DIR/.env")
+	server_domain=$(read_env_value SERVER_DOMAIN "$Custome_Support_DIR/.env")
 	cert_path=
-	if [ -r "$BASJOO_DIR/ssl/fullchain.pem" ] || [ -r "$BASJOO_DIR/ssl/cert.pem" ]; then
+	if [ -r "$Custome_Support_DIR/ssl/fullchain.pem" ] || [ -r "$Custome_Support_DIR/ssl/cert.pem" ]; then
 		cert_path=1
 	fi
 	key_path=
-	if [ -r "$BASJOO_DIR/ssl/key.pem" ]; then
+	if [ -r "$Custome_Support_DIR/ssl/key.pem" ]; then
 		key_path=1
 	fi
 
@@ -353,10 +353,10 @@ print_summary() {
 
 	printf '%s\n' ''
 	printf '%s\n' '=========================================='
-	printf '%s\n' '   Basjoo deployment is ready!           '
+	printf '%s\n' '   Custome_Support deployment is ready!           '
 	printf '%s\n' '=========================================='
 	printf '%s\n' ''
-	printf 'Project directory: %s\n' "$BASJOO_DIR"
+	printf 'Project directory: %s\n' "$Custome_Support_DIR"
 	printf '%s\n' ''
 	printf '%s\n' 'Admin dashboard:'
 	printf '  %s\n' "$admin_url"
@@ -366,11 +366,11 @@ print_summary() {
 	printf '%s\n' '  2. Register your admin account (becomes workspace super admin)'
 	printf '%s\n' '  3. Configure your AI agents and API keys'
 	printf '%s\n' ''
-	printf 'Status command: %s\n' "$DOCKER_BIN compose --project-directory $BASJOO_DIR --profile prod ps"
-	printf 'Log command: %s\n' "$DOCKER_BIN compose --project-directory $BASJOO_DIR --profile prod logs -f backend-prod nginx"
+	printf 'Status command: %s\n' "$DOCKER_BIN compose --project-directory $Custome_Support_DIR --profile prod ps"
+	printf 'Log command: %s\n' "$DOCKER_BIN compose --project-directory $Custome_Support_DIR --profile prod logs -f backend-prod nginx"
 
-	# Best-effort auto-open in background (skip if BASJOO_AUTO_OPEN=0 or placeholder URL)
-	if [ "${BASJOO_AUTO_OPEN:-1}" != "0" ] && [ "$admin_url" != "http://<server-ip-or-domain>" ]; then
+	# Best-effort auto-open in background (skip if Custome_Support_AUTO_OPEN=0 or placeholder URL)
+	if [ "${Custome_Support_AUTO_OPEN:-1}" != "0" ] && [ "$admin_url" != "http://<server-ip-or-domain>" ]; then
 		if [ -n "${DISPLAY:-}" ] || [ -n "${WAYLAND_DISPLAY:-}" ]; then
 			if command -v xdg-open >/dev/null 2>&1; then
 				printf '%s\n' ''
@@ -387,11 +387,11 @@ print_summary() {
 }
 
 deploy_repo() {
-	[ -f "$BASJOO_DIR/deploy.sh" ] || fail "deploy.sh was not found in $BASJOO_DIR."
-	[ -f "$BASJOO_DIR/docker-compose.yml" ] || fail "docker-compose.yml was not found in $BASJOO_DIR."
+	[ -f "$Custome_Support_DIR/deploy.sh" ] || fail "deploy.sh was not found in $Custome_Support_DIR."
+	[ -f "$Custome_Support_DIR/docker-compose.yml" ] || fail "docker-compose.yml was not found in $Custome_Support_DIR."
 
-	log "Running Basjoo production deployment"
-	BASJOO_DOCKER_BIN="$DOCKER_BIN" sh "$BASJOO_DIR/deploy.sh"
+	log "Running Custome_Support production deployment"
+	Custome_Support_DOCKER_BIN="$DOCKER_BIN" sh "$Custome_Support_DIR/deploy.sh"
 }
 
 main() {

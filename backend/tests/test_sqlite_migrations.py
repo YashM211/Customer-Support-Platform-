@@ -13,9 +13,9 @@ from sqlite_migrations import run_sqlite_migrations, _sqlite_db_path
 
 
 def test_sqlite_db_path_simple():
-    path = _sqlite_db_path("sqlite:///app/data/basjoo.db")
+    path = _sqlite_db_path("sqlite:///app/data/Custome_Support.db")
     assert path is not None
-    assert path.endswith("data/basjoo.db") or path.endswith("app/data/basjoo.db")
+    assert path.endswith("data/Custome_Support.db") or path.endswith("app/data/Custome_Support.db")
 
 
 def test_sqlite_db_path_absolute():
@@ -204,7 +204,7 @@ def test_migration_backfills_defaults():
         assert row["persona_type"] == "general"
         assert row["widget_title"] == "AI 客服"
         assert row["widget_color"] == "#06B6D4"
-        assert "Basjoo" in row["welcome_message"] or "您好" in row["welcome_message"]
+        assert "Custome_Support" in row["welcome_message"] or "您好" in row["welcome_message"]
     finally:
         os.unlink(db_path)
 

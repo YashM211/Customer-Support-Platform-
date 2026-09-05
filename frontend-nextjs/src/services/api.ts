@@ -247,14 +247,14 @@ export async function parseErrorResponse(response: Response): Promise<string> {
 
 class APIService {
 	private baseUrl: string;
-	private selectedAgentStorageKey = "basjoo_selected_agent_id";
+	private selectedAgentStorageKey = "Custome_Support_selected_agent_id";
 
 	constructor(baseUrl: string = API_BASE_URL) {
 		this.baseUrl = baseUrl;
 	}
 
 	private getLocale(): string {
-		return localStorage.getItem("basjoo_locale") || "zh-CN";
+		return localStorage.getItem("Custome_Support_locale") || "zh-CN";
 	}
 
 	private getStreamBaseUrl(): string {
@@ -285,7 +285,7 @@ class APIService {
 		if (typeof window === "undefined") return;
 		localStorage.setItem(this.selectedAgentStorageKey, agentId);
 		window.dispatchEvent(
-			new CustomEvent("basjoo-agent-changed", { detail: { agentId } }),
+			new CustomEvent("Custome_Support-agent-changed", { detail: { agentId } }),
 		);
 	}
 
@@ -293,7 +293,7 @@ class APIService {
 		if (typeof window === "undefined") return;
 		localStorage.removeItem(this.selectedAgentStorageKey);
 		window.dispatchEvent(
-			new CustomEvent("basjoo-agent-changed", { detail: { agentId: null } }),
+			new CustomEvent("Custome_Support-agent-changed", { detail: { agentId: null } }),
 		);
 	}
 

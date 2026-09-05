@@ -1072,7 +1072,7 @@ async def publish_chat_response(
     assistant_content: Optional[str] = None,
 ) -> None:
     """Broadcast chat updates to admin websocket subscribers."""
-    if os.getenv("BASJOO_TEST_MODE") == "1":
+    if os.getenv("Custome_Support_TEST_MODE") == "1":
         return
 
     from services.websocket_service import manager
@@ -1696,7 +1696,7 @@ async def create_agent(
         persona_type=persona_type,
         widget_title=request.widget_title or request.name,
         welcome_message=request.welcome_message
-        or "您好！我是Basjoo助手，有什么可以帮您的吗？",
+        or "您好！我是Custome_Support助手，有什么可以帮您的吗？",
     )
     if settings.deepseek_api_key:
         agent.api_key = encrypt_api_key(settings.deepseek_api_key)

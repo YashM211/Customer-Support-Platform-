@@ -142,7 +142,7 @@ async def test_chat_system_message_includes_kb_context():
                     mock_kb_svc = MagicMock()
                     # Return KB results with a unique phrase
                     mock_kb_svc.retrieve = AsyncMock(return_value=[
-                        {"text": "The BasjooKB2024TEST answer is 42", "doc_id": "doc1", "chunk_index": 0, "score": 0.045, "filename": "knowledge.txt"}
+                        {"text": "The Custome_SupportKB2024TEST answer is 42", "doc_id": "doc1", "chunk_index": 0, "score": 0.045, "filename": "knowledge.txt"}
                     ])
                     mock_kb_svc_cls.return_value = mock_kb_svc
 
@@ -157,7 +157,7 @@ async def test_chat_system_message_includes_kb_context():
                     # Should contain the KB context marker
                     assert "背景资料" in system_content or "relevant information" in system_content.lower()
                     # Should contain the retrieved text
-                    assert "BasjooKB2024TEST" in system_content
+                    assert "Custome_SupportKB2024TEST" in system_content
 
 
 @pytest.mark.asyncio
@@ -285,7 +285,7 @@ async def test_ready_kb_content_with_unique_phrase_passed_to_chat_context():
     mock_agent.top_k = 3
     mock_agent.similarity_threshold = 0.04
     mock_agent.temperature = 0.7
-    mock_agent.system_prompt = "You are Basjoo assistant."
+    mock_agent.system_prompt = "You are Custome_Support assistant."
     mock_agent.enable_context = False
     mock_agent.api_key = "test_key"
     mock_agent.api_base = "https://api.test.com"

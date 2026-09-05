@@ -1,13 +1,17 @@
-import type { Metadata } from 'next';
-import '../src/index.css';
-import { AppProviders } from '../src/components/AppProviders';
+import type { Metadata } from "next";
+import "../src/index.css";
+import { AppProviders } from "../src/components/AppProviders";
 
 export const metadata: Metadata = {
-  title: 'Basjoo',
-  description: 'Basjoo admin dashboard',
+  title: "Custome_Support",
+  description: "Custome_Support admin dashboard",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
       <body>

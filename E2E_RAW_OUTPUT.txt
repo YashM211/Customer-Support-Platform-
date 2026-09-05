@@ -1,6 +1,6 @@
 # Final E2E Raw Output (Redacted)
 Date: 2026-06-04
-Worktree: /Users/yi/Documents/Projects/basjoo-e2e-bugfix-integration
+Worktree: /Users/yi/Documents/Projects/Custome_Support-e2e-bugfix-integration
 Branch: execute/e2e-bugfix-integration-20260604
 
 Secrets redacted: API key values were not written.

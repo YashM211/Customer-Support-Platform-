@@ -40,7 +40,7 @@ def ensure_data_directory():
         os.makedirs(data_dir, exist_ok=True)
 
     try:
-        user_info = pwd.getpwnam("basjoo")
+        user_info = pwd.getpwnam("Custome_Support")
         uid = user_info.pw_uid
         gid = user_info.pw_gid
 
@@ -61,7 +61,7 @@ def ensure_data_directory():
                 path = os.path.join(root, filename)
                 os.chown(path, uid, gid)
     except KeyError:
-        print("Warning: basjoo user not found, running as current user")
+        print("Warning: Custome_Support user not found, running as current user")
         return None, None
 
     return uid, gid
@@ -208,7 +208,7 @@ def main():
         uid, gid = ensure_data_directory()
 
         if uid is not None:
-            print("Switching to basjoo user...")
+            print("Switching to Custome_Support user...")
             drop_privileges(uid, gid)
     else:
         print(f"Running as UID={os.getuid()}, skipping privilege drop")

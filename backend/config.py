@@ -127,7 +127,7 @@ class Settings(BaseSettings):
     scraping_fallback_to_cloud: bool = False
 
     # 数据库 - SQLite (轻量级MVP方案)
-    database_url: str = "sqlite:///./data/basjoo.db"
+    database_url: str = "sqlite:///./data/Custome_Support.db"
 
     # Redis 配置
     redis_url: str = "redis://redis:6379/0"
@@ -168,7 +168,7 @@ class Settings(BaseSettings):
     cors_allow_null_origin: bool = False
 
     # 应用
-    app_name: str = "Basjoo"
+    app_name: str = "Custome_Support"
     app_port: int = 8000
 
     # 限流

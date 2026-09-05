@@ -24,7 +24,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### One-command production install (Ubuntu/Debian)
 
-- Blank server deploy: `curl -fsSL https://raw.githubusercontent.com/haoyiyin/basjoo/main/install-deploy.sh | sudo sh`
+- Blank server deploy: `curl -fsSL https://raw.githubusercontent.com/haoyiyin/Custome_Support/main/install-deploy.sh | sudo sh`
 - Local repo deploy: `sudo sh install-deploy.sh`
 - Supported systems: Ubuntu and Debian. The script auto-installs Docker/Compose, clones/syncs the repo, and deploys the production profile.
 - Persistent volumes are preserved; `install-deploy.sh` does not remove `backend-data`, `redis-data`, or `postgres-data`.
@@ -44,8 +44,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Install deps: `npm install`
 - Dev bundle/example server: `npm run dev`
 - Build distributables: `npm run build` (typecheck + dev + prod bundles)
-- Dev-only build: `npm run build:dev` (unminified ESM, `dist/basjoo-widget.js`)
-- Prod-only build: `npm run build:prod` (minified IIFE, `dist/basjoo-widget.min.js`)
+- Dev-only build: `npm run build:dev` (unminified ESM, `dist/Custome_Support-widget.js`)
+- Prod-only build: `npm run build:prod` (minified IIFE, `dist/Custome_Support-widget.min.js`)
 - Type-check: `npm run typecheck`
 - Run tests: `npm run test`
 
@@ -92,7 +92,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - Collection IDs are cached in a module-level `_collection_cache` dict — never persisted, scoped to the process lifetime.
 - **KB scoring**: The self-KB uses Qdrant similarity search. Scores vary by embedding model. The `similarity_threshold` filter defaults to 0.01.
   - Frontend slider: 0-100% maps to 0.00-0.10 internally via `display/1000 = internal`. Default: 10% (0.01).
-- **LLM vs embedding distinction**: `backend/services/llm_service.py` is the *chat-completion* provider abstraction (OpenAI, Google, DeepSeek, etc.). Embeddings are managed by the self-KB via OpenAI-compatible embedding APIs (Jina, SiliconFlow, custom).
+- **LLM vs embedding distinction**: `backend/services/llm_service.py` is the _chat-completion_ provider abstraction (OpenAI, Google, DeepSeek, etc.). Embeddings are managed by the self-KB via OpenAI-compatible embedding APIs (Jina, SiliconFlow, custom).
 - URL safety/SSRF checks are centralized in `backend/services/url_safety.py` and reused by both schema validation and scraper fetch/discovery flows. SSRF protection blocks loopback, private, link-local, multicast, and unspecified addresses, plus direct IP literals and embedded credentials. The IANA benchmarking range `198.18.0.0/15` (RFC 2544) is explicitly whitelisted because Python's `ipaddress` incorrectly classifies it as `is_private`, but real public websites are hosted there.
 - Task concurrency for fetch/rebuild operations is guarded by the shared task lock service used by the URL and index endpoints.
 
@@ -105,9 +105,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Widget structure
 
-- `widget/src/BasjooWidget.tsx` is a self-contained embeddable widget implementation bundled with esbuild.
+- `widget/src/Custome_SupportWidget.tsx` is a self-contained embeddable widget implementation bundled with esbuild.
 - The widget auto-detects `apiBase`, streams chat via SSE, persists visitor/session IDs in `localStorage`, and polls for human-takeover replies.
-- Backend `/sdk.js`, `/basjoo-logo.png`, and widget demo routes are served directly from `backend/main.py`.
+- Backend `/sdk.js`, `/Custome_Support-logo.png`, and widget demo routes are served directly from `backend/main.py`.
 
 ### Deployment notes
 
@@ -121,7 +121,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Testing notes
 
-- Backend tests use `backend/tests/conftest.py` to force `BASJOO_TEST_MODE=1`, create isolated SQLite DBs under `backend/.pytest_dbs/`, and monkeypatch LLM integrations for most API tests.
+- Backend tests use `backend/tests/conftest.py` to force `Custome_Support_TEST_MODE=1`, create isolated SQLite DBs under `backend/.pytest_dbs/`, and monkeypatch LLM integrations for most API tests.
 - Use the existing `client` fixture for authenticated admin API tests and `public_client` for unauthenticated/public-route coverage instead of building ad-hoc `AsyncClient` fixtures in individual test files.
 - To test actual self-KB integration, run against the Docker dev stack with Qdrant.
 - Run tests locally via venv (not system python): `source venv/bin/activate && python3 -m pytest tests/ --ignore=tests/integration/`. The `--ignore` is needed because `tests/integration/test_service_clients.py` imports an unavailable module.

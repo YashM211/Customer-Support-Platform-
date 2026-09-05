@@ -3,7 +3,7 @@
 from sqlalchemy import create_engine, text
 
 
-def run_migration(db_url: str = "sqlite:///data/basjoo.db"):
+def run_migration(db_url: str = "sqlite:///data/Custome_Support.db"):
     engine = create_engine(db_url)
     with engine.connect() as conn:
         conn.execute(

@@ -30,7 +30,7 @@ class TestProductionSimulation:
                     json={
                         "agent_id": agent_id,
                         "session_id": session_id,
-                        "message": f"User {user_id}: What is Basjoo?",
+                        "message": f"User {user_id}: What is Custome_Support?",
                     },
                 )
                 return response.status_code == 200
